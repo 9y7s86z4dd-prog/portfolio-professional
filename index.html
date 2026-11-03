@@ -11,9 +11,60 @@ main > section{display:none}
 main > section.is-active{display:block}
 nav a[aria-current="page"]{color:var(--mint);font-weight:700}
 @media(max-width:760px){.navin{height:auto;min-height:68px;flex-wrap:wrap;padding:12px 0;gap:10px}nav{display:flex;gap:14px;overflow-x:auto;width:100%;padding:4px 0 8px;white-space:nowrap}nav a{flex:none}}
+</style><style>
+:root{--navy:#06182c;--blue:#087b9c;--mint:#2bdde0;--ink:#eaf5fb;--muted:#a9c4d7;--paper:#071b32;--line:#17405b}
+body{background:#06182c;color:#eaf5fb}
+.nav{background:#071a30f5;border-bottom:1px solid #1a5670;box-shadow:0 8px 30px #00101e66}
+.navin{height:82px;width:min(1500px,calc(100% - 64px))}
+.brand-lockup{display:flex;align-items:center;gap:15px;color:#fff}
+.vib-logo{width:70px;height:50px;flex:none}
+.brand-name{font:700 15px/1.2 Manrope,sans-serif;border-left:1px solid #6a8ca4;padding-left:15px}
+nav{gap:clamp(12px,2vw,30px);font-size:14px}
+nav a{padding:12px 14px;border:1px solid transparent;border-radius:28px}
+nav a[aria-current="page"]{color:var(--mint);border-color:#16b8ca;background:#0b3049}
+.back-dashboard{display:none;position:fixed;z-index:8;top:96px;left:30px;padding:11px 19px;border:1px solid var(--mint);border-radius:28px;background:#06182ceF;color:#eaf5fb;font-size:13px;font-weight:700}
+body:has(main > #home.is-active) .back-dashboard{display:none}
+body:not(:has(main > #home.is-active)) .back-dashboard{display:block}
+.hero{min-height:calc(100vh - 82px);display:flex;align-items:center;padding:65px 0 55px;overflow:hidden;position:relative;background:radial-gradient(ellipse at 88% 35%,#0b527b88,transparent 38%),radial-gradient(ellipse at 5% 95%,#005c8a55,transparent 35%),linear-gradient(115deg,#061629,#0b2945 65%,#07395c)}
+.hero:before{content:"";position:absolute;right:13%;top:10%;width:34%;height:90%;opacity:.24;background:repeating-linear-gradient(90deg,transparent 0 34px,#5fc8e5 35px 36px),repeating-linear-gradient(0deg,transparent 0 38px,#5fc8e5 39px 40px);clip-path:polygon(35% 0,75% 12%,100% 100%,0 100%,12% 22%);pointer-events:none}
+.hero-grid{width:min(1500px,calc(100% - 80px));grid-template-columns:1.35fr .75fr;gap:clamp(35px,7vw,110px);position:relative;z-index:1}
+.hero-identity{display:flex;align-items:center;gap:24px;margin:14px 0 18px}
+.hero-monogram{width:clamp(100px,17vw,190px);flex:none;filter:drop-shadow(0 0 12px #14cfe066)}
+h1{font-size:clamp(44px,6vw,82px);line-height:1.02;margin:0;letter-spacing:-.045em}
+h1 span{color:#31dce0}
+.role{font-size:clamp(14px,1.4vw,19px);color:#d5e8f5}
+.hero p{font-size:clamp(15px,1.35vw,19px);line-height:1.65;max-width:700px}
+.actions{gap:13px;margin-top:30px}
+.btn{padding:15px 20px;border-radius:28px;font-size:14px;border:1px solid #22c9dc}
+.primary{background:linear-gradient(110deg,#27e1e6,#29b8d0);color:#05223a}
+.ghost{background:#061b30aa;color:#eefaff}
+.profile{padding:28px;border:1px solid #5b8eae66;border-radius:24px;background:linear-gradient(145deg,#16405cbb,#102a43dd);box-shadow:0 20px 55px #00101e66;backdrop-filter:blur(10px)}
+.profile-photo{width:145px;height:175px;border:3px solid #55d4e5;margin-bottom:24px}
+.profile h3{font-size:22px}
+.profile p{color:#c1d9e9}
+.stats{gap:20px 15px}
+.stats b{color:#49e0e4;font-size:24px}
+main>section{scroll-margin-top:0}
+main>section:not(#home){background:#0b2036;color:#edf7fb;min-height:calc(100vh - 82px);padding:110px 0 60px}
+main>section:not(#home) .head p,main>section:not(#home) .muted{color:#b2c8d8}
+main>section:not(#home) .head .eyebrow,.label{color:#4adce2}
+main>section:not(#home) .card,main>section:not(#home) .skill,main>section:not(#home) .cert{background:#102e49;border-color:#24516c;color:#edf7fb}
+main>section:not(#home) .card p,main>section:not(#home) .skill p,main>section:not(#home) .cert small{color:#b4cad9}
+main>section:not(#home) .about p{color:#c4d8e7}
+main>section:not(#home) .chip,main>section:not(#home) .tag{background:#153d59;color:#aeeef0}
+main>section:not(#home) .contact{background:linear-gradient(120deg,#0a2945,#0c5270)}
+footer{background:#061629;color:#88a6ba}
+@media(max-width:900px){.navin{width:calc(100% - 32px);height:auto;min-height:78px;flex-wrap:wrap;padding:10px 0}.hero-grid{width:calc(100% - 40px);grid-template-columns:1fr}.hero{padding:48px 0}.profile{max-width:560px}.back-dashboard{top:120px;left:16px}}
+@media(max-width:600px){.vib-logo{width:52px}.brand-name{font-size:12px}nav{width:100%;overflow-x:auto;white-space:nowrap;gap:4px}nav a{flex:none;font-size:12px;padding:8px}.hero-identity{gap:10px}.hero-monogram{width:80px}h1{font-size:clamp(34px,10vw,52px)}.actions .btn{width:100%;text-align:center}.back-dashboard{top:125px}}
+@media print{.nav,.back-dashboard,footer{display:none!important}main>section{display:block!important;page-break-after:always;background:#fff!important;color:#111!important}body{background:#fff!important;color:#111!important}.hero{min-height:auto!important}}
 </style></head><body>
-<header class="nav"><div class="wrap navin"><a class="brand" href="#home">VICKY<span>.</span></a><nav aria-label="Navigasi utama"><a href="#about" data-page-link="about">Tentang</a><a href="#experience" data-page-link="experience">Pengalaman</a><a href="#education" data-page-link="education">Pendidikan</a><a href="#skills" data-page-link="skills">Keahlian</a><a href="#contact" data-page-link="contact">Kontak</a></nav></div></header>
-<main><section class="hero" id="home"><div class="wrap hero-grid"><div><div class="eyebrow">Portofolio Profesional · 2026</div><h1>Vicky Ibnu<br>Bayanaka.</h1><div class="role">S1 Teknik Sipil · Project Control · Drafting · K3 Konstruksi</div><p>Lulusan Teknik Sipil dengan pengalaman di lingkungan BUMN, berfokus pada dukungan proyek, gambar teknis 2D/3D, pengelolaan pekerjaan, dan keselamatan konstruksi.</p><div class="actions"><a class="btn primary" href="#experience" data-page-link="experience">Jelajahi Profil</a><a class="btn ghost" href="https://drive.google.com/file/d/18Y6078-gME2vWMvsYCyF8lXlCh5xeWrL/view?usp=drive_link" target="_blank">Lihat CV</a><a class="btn ghost" href="https://drive.google.com/drive/folders/1TkwR0k3BWUhozC2tvq4kj2F3ZFQfz2Cd?usp=sharing" target="_blank" rel="noopener noreferrer">Lihat Portofolio Pekerjaan</a></div></div><aside class="profile"><img class="profile-photo" src="Vicky Ibnu Bayanka_202121017.jpg" alt="Foto profil Vicky Ibnu Bayanaka"><h3>Engineering with structure.<br>Execution with purpose.</h3><p>Padang, Sumatera Barat · Indonesia</p><div class="stats"><div><b>2025</b><small>Sarjana Teknik Sipil</small></div><div><b>Level 5</b><small>Supervisor K3 Konstruksi</small></div><div><b>560</b><small>English Language Test</small></div><div><b>Excel</b><small>Microsoft Office Specialist</small></div></div></aside></div></section>
+<header class="nav"><div class="wrap navin">
+<a class="brand-lockup" href="#home" data-page-link="home" aria-label="VIB — Vicky Ibnu Bayanaka">
+<svg class="vib-logo" viewBox="0 0 90 58" role="img" aria-label="Logo VIB"><path d="M5 13 L25 49 L39 27 L53 49 L84 10" fill="none" stroke="#36dce0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 28 V11 L44 4 V28 M48 28 V17 L56 10 V28 M60 28 V7 L68 1 V28" fill="none" stroke="#bceef4" stroke-width="2.5"/><text x="17" y="55" font-size="17" font-weight="800" fill="#fff">VIB</text></svg>
+<span class="brand-name">Vicky Ibnu<br>Bayanaka</span></a>
+<nav aria-label="Navigasi utama"><a href="#home" data-page-link="home" aria-current="page">Dashboard</a><a href="#about" data-page-link="about">Tentang</a><a href="#experience" data-page-link="experience">Pengalaman</a><a href="#education" data-page-link="education">Pendidikan</a><a href="#skills" data-page-link="skills">Keahlian</a><a href="#contact" data-page-link="contact">Kontak</a></nav></div></header>
+<a class="back-dashboard" href="#home" data-page-link="home">← &nbsp;⌂ Kembali ke Dashboard</a>
+<main><section class="hero" id="home"><div class="wrap hero-grid"><div><div class="eyebrow">Portofolio Profesional · 2026</div><div class="hero-identity"><svg class="hero-monogram" viewBox="0 0 180 130" role="img" aria-label="Monogram VIB"><path d="M10 24 L50 108 L83 56 L117 108 L169 17" fill="none" stroke="#31dce0" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M75 55 V20 L91 7 V55 M99 55 V30 L115 16 V55 M123 55 V14 L139 1 V55" fill="none" stroke="#b9f4f4" stroke-width="5"/><text x="34" y="126" font-size="36" font-weight="800" fill="#fff">VIB</text></svg><h1>Vicky Ibnu<br><span>Bayanaka.</span></h1></div><div class="role">S1 Teknik Sipil · Project Control · Drafting · K3 Konstruksi</div><p>Lulusan Teknik Sipil dengan pengalaman di lingkungan BUMN, berfokus pada dukungan proyek, gambar teknis 2D/3D, pengelolaan pekerjaan, dan keselamatan konstruksi.</p><div class="actions"><a class="btn primary" href="https://drive.google.com/file/d/18Y6078-gME2vWMvsYCyF8lXlCh5xeWrL/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Unduh CV (PDF)</a><a class="btn ghost" href="https://drive.google.com/drive/folders/1TkwR0k3BWUhozC2tvq4kj2F3ZFQfz2Cd?usp=sharing" target="_blank" rel="noopener noreferrer">Web Portofolio / Hasil Kerja</a><a class="btn ghost" href="#experience" data-page-link="experience">Lihat Detail</a><a class="btn ghost" href="https://drive.google.com/drive/folders/1TkwR0k3BWUhozC2tvq4kj2F3ZFQfz2Cd?usp=sharing" target="_blank" rel="noopener noreferrer">Lihat Portofolio Pekerjaan</a></div></div><aside class="profile"><img class="profile-photo" src="Vicky Ibnu Bayanka_202121017.jpg" alt="Foto profil Vicky Ibnu Bayanaka"><h3>Engineering with structure.<br>Execution with purpose.</h3><p>Padang, Sumatera Barat · Indonesia</p><div class="stats"><div><b>2025</b><small>Sarjana Teknik Sipil</small></div><div><b>Level 5</b><small>Supervisor K3 Konstruksi</small></div><div><b>560</b><small>English Language Test</small></div><div><b>Excel</b><small>Microsoft Office Specialist</small></div></div></aside></div></section>
 <section id="about"><div class="wrap about"><div class="label">01 / TENTANG SAYA</div><div class="head"><h2>Menghubungkan perencanaan, detail teknis, dan pelaksanaan.</h2><p>Saya merupakan lulusan S1 Teknik Sipil dari Institut Teknologi PLN (IT-PLN), penerima Beasiswa Prestasi PLN. Memiliki pengalaman magang di PT Indonesia Comnets Plus (PLN Icon Plus) dan PT PLN (Persero) UP2D Wilayah Sumatera Barat. Terbiasa mendukung pekerjaan desain dan gambar kerja, pengukuran lapangan, estimasi volume, RAB, penjadwalan, serta dokumentasi pekerjaan.</p><div class="chips"><span class="chip">Project Support</span><span class="chip">AutoCAD</span><span class="chip">SketchUp</span><span class="chip">RAB & Kurva S</span><span class="chip">K3 Konstruksi</span><span class="chip">Microsoft Excel</span></div></div></div></section>
 <section class="dark" id="experience"><div class="wrap"><div class="head"><div class="eyebrow">02 / PENGALAMAN</div><h2>Pengalaman profesional & lapangan.</h2><p>Ringkasan pengalaman berdasarkan CV.</p></div>
 <article class="item"><div class="date">NOV 2025 — MEI 2026</div><div><h3>Internship – Staff Office Building</h3><div class="company">PT Indonesia Comnets Plus (PLN Icon Plus) · Program Magang Kemenaker</div><ul><li>Menyusun desain dan gambar kerja DED menggunakan AutoCAD dan SketchUp untuk proyek renovasi gedung kantor.</li><li>Mengelola visualisasi teknis dan memperhatikan efisiensi sirkulasi ruang pada fasilitas aset perusahaan.</li><li>Berkoordinasi dengan tim manajemen aset dalam pemeliharaan dan pengembangan infrastruktur gedung.</li></ul></div></article>
