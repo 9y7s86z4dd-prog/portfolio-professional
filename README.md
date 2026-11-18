@@ -17,11 +17,15 @@ Website portofolio profesional statis untuk menampilkan profil, pengalaman, proy
 - `favicon.svg` — ikon tab browser
 - `robots.txt` — arahan crawling mesin pencari
 - `sitemap.xml` — peta URL untuk mesin pencari
-- `Futuristic VIB Skyline Emblem.png` — aset identitas visual
-- `Vicky Ibnu Bayanka_202121017.jpg` — foto profil
+- `assets/vib-logo.webp` — logo WebP untuk navigasi dan hero
+- `assets/profile.webp` — foto profil WebP yang dioptimalkan
+- `Futuristic VIB Skyline Emblem.png` dan `Vicky Ibnu Bayanka_202121017.jpg` — file sumber asli yang dipertahankan
 
 ## Konten
 Website mencakup ringkasan profil, tiga ringkasan pengalaman proyek, riwayat magang dan observasi lapangan, pendidikan, keahlian teknis, sertifikasi, tautan CV/dokumentasi, serta formulir kontak yang menyiapkan pesan WhatsApp.
+
+## Optimasi gambar otomatis
+Workflow GitHub Actions pada `.github/workflows/optimize-images.yml` mengonversi logo dan foto profil sumber menjadi WebP saat file sumber atau workflow diperbarui, serta dapat dijalankan manual melalui tab Actions. Foto profil dibatasi hingga 900×1100 piksel dan logo hingga 1200×1200 piksel untuk menekan ukuran unduhan tanpa mengubah file sumber.
 
 ## Pengembangan dan deployment
 Website tidak memerlukan proses build. Perubahan pada branch `main` akan dipublikasikan oleh Netlify apabila integrasi continuous deployment aktif. Periksa status deploy di dashboard Netlify setelah setiap pembaruan.
