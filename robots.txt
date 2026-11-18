@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://resonant-crisp-257f09.netlify.app/sitemap.xml
