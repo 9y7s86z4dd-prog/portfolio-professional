@@ -40,16 +40,17 @@ jobs:
           from PIL import Image, ImageOps
 
           conversions = [
-              (Path("Futuristic VIB Skyline Emblem.png"), Path("assets/vib-logo.webp"), 86),
-              (Path("Vicky Ibnu Bayanka_202121017.jpg"), Path("assets/profile.webp"), 84),
+              (Path("Futuristic VIB Skyline Emblem.png"), Path("assets/vib-logo.webp"), 86, (1200, 1200)),
+              (Path("Vicky Ibnu Bayanka_202121017.jpg"), Path("assets/profile.webp"), 84, (900, 1100)),
           ]
 
-          for source, destination, quality in conversions:
+          for source, destination, quality, max_size in conversions:
               if not source.is_file():
                   raise FileNotFoundError(f"Source image not found: {source}")
 
               with Image.open(source) as original:
                   image = ImageOps.exif_transpose(original)
+                  image.thumbnail(max_size, Image.Resampling.LANCZOS)
                   if image.mode not in ("RGB", "RGBA"):
                       image = image.convert("RGBA" if "A" in image.getbands() else "RGB")
                   image.save(
@@ -60,7 +61,7 @@ jobs:
                       optimize=True,
                   )
                   print(
-                      f"{source} -> {destination}: "
+                      f"{source} ({image.width}x{image.height}) -> {destination}: "
                       f"{source.stat().st_size:,} bytes -> {destination.stat().st_size:,} bytes"
                   )
           PY
