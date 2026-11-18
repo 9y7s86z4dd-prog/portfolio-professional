@@ -100,5 +100,6 @@ jobs:
             echo "No image changes to commit."
           else
             git commit -m "Optimize portfolio images to WebP"
+            git pull --rebase origin main
             git push
           fi
