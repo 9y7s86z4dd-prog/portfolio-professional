@@ -267,8 +267,7 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
     if (!page) return;
     event.preventDefault();
     showPage(page);
-    if(primaryNav) primaryNav.classList.remove('is-open');
-    if(navToggle){navToggle.setAttribute('aria-expanded','false');navToggle.setAttribute('aria-label','Buka menu navigasi');navToggle.textContent='☰';}
+    closeMobileNav();
   }));
   const initial = location.hash.slice(1);
   showPage(groups[initial] ? initial : 'home', false);
@@ -278,14 +277,16 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
     if (!navToggle || !primaryNav) return;
     primaryNav.classList.remove('is-open');
     navToggle.setAttribute('aria-expanded','false');
-    navToggle.setAttribute('aria-label','Buka menu navigasi');
+    navToggle.setAttribute('aria-label',currentLanguage==='en'?'Open navigation menu':'Buka menu navigasi');
     navToggle.textContent='☰';
   }
   if(navToggle&&primaryNav) {
     navToggle.addEventListener('click',()=>{
       const opened=primaryNav.classList.toggle('is-open');
       navToggle.setAttribute('aria-expanded',String(opened));
-      navToggle.setAttribute('aria-label',opened?'Tutup menu navigasi':'Buka menu navigasi');
+      navToggle.setAttribute('aria-label',opened
+        ? (currentLanguage==='en'?'Close navigation menu':'Tutup menu navigasi')
+        : (currentLanguage==='en'?'Open navigation menu':'Buka menu navigasi'));
       navToggle.textContent=opened?'×':'☰';
     });
     document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMobileNav();});
@@ -448,8 +449,10 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
       const focusable=[...projectDialogCard.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getAttribute('aria-hidden')!=='true');
       if(!focusable.length){event.preventDefault();projectDialogCard.focus();return;}
       const first=focusable[0],last=focusable[focusable.length-1];
-      if(event.shiftKey&&(document.activeElement===first||!projectDialogCard.contains(document.activeElement))){event.preventDefault();last.focus();}
-      else if(!event.shiftKey&&(document.activeElement===last||!projectDialogCard.contains(document.activeElement))){event.preventDefault();first.focus();}
+      const focusIsOnDialog= document.activeElement===projectDialogCard;
+      const focusIsOutside= !projectDialogCard.contains(document.activeElement);
+      if(event.shiftKey&&(document.activeElement===first||focusIsOutside||focusIsOnDialog)){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&(document.activeElement===last||focusIsOutside||focusIsOnDialog)){event.preventDefault();first.focus();}
     }
   });
 
