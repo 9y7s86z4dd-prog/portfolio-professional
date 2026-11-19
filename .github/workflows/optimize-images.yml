@@ -34,14 +34,14 @@ jobs:
 
       - name: Convert original images to WebP
         run: |
-          mkdir -p assets
+          mkdir -p site/assets
           python - <<'PY'
           from pathlib import Path
           from PIL import Image, ImageOps
 
           conversions = [
-              (Path("Futuristic VIB Skyline Emblem.png"), Path("assets/vib-logo.webp"), 86, (1200, 1200)),
-              (Path("Vicky Ibnu Bayanka_202121017.jpg"), Path("assets/profile.webp"), 84, (900, 1100)),
+              (Path("Futuristic VIB Skyline Emblem.png"), Path("site/assets/vib-logo.webp"), 86, (1200, 1200)),
+              (Path("Vicky Ibnu Bayanka_202121017.jpg"), Path("site/assets/profile.webp"), 84, (900, 1100)),
           ]
 
           for source, destination, quality, max_size in conversions:
@@ -71,7 +71,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          page = Path("index.html")
+          page = Path("site/index.html")
           html = page.read_text(encoding="utf-8")
 
           replacements = {
@@ -95,7 +95,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/vib-logo.webp assets/profile.webp index.html
+          git add site/assets/vib-logo.webp site/assets/profile.webp site/index.html
           if git diff --cached --quiet; then
             echo "No image changes to commit."
           else

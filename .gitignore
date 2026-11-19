@@ -1,0 +1,6 @@
+# Netlify local project state
+.netlify/
+
+# Local operating-system files
+.DS_Store
+Thumbs.db

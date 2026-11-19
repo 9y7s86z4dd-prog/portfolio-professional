@@ -6,37 +6,32 @@ Website portofolio profesional statis untuk menampilkan profil, pengalaman, proy
 
 ## Teknologi
 - HTML5 semantik
-- CSS responsif dengan pendekatan mobile-first
+- CSS responsif
 - JavaScript vanilla tanpa dependensi/build tool
-- JSON-LD Schema.org (Person)
-- Open Graph dan Twitter Card
-- XML sitemap, robots.txt, SVG favicon
+- JSON-LD Schema.org, Open Graph, dan Twitter Card
+- XML sitemap, robots.txt, dan SVG favicon
 
-## Struktur file
-- `index.html` — halaman utama, styling, navigasi, dan interaksi
-- `favicon.svg` — ikon tab browser
-- `robots.txt` — arahan crawling mesin pencari
-- `sitemap.xml` — peta URL untuk mesin pencari
-- `assets/vib-logo.webp` — logo WebP untuk navigasi dan hero
-- `assets/profile.webp` — foto profil WebP yang dioptimalkan
-- `Futuristic VIB Skyline Emblem.png` dan `Vicky Ibnu Bayanka_202121017.jpg` — file sumber asli yang dipertahankan
-
-## Konten
-Website mencakup ringkasan profil, tiga ringkasan pengalaman proyek, riwayat magang dan observasi lapangan, pendidikan, keahlian teknis, sertifikasi, tautan CV/dokumentasi, serta formulir kontak yang menyiapkan pesan WhatsApp.
+## Struktur repository
+- `site/index.html` — halaman utama, styling, navigasi, dan interaksi
+- `site/favicon.svg` — ikon tab browser
+- `site/robots.txt` — arahan crawling mesin pencari
+- `site/sitemap.xml` — peta URL untuk mesin pencari
+- `site/assets/vib-logo.webp` — logo WebP untuk navigasi dan hero
+- `site/assets/profile.webp` — foto profil WebP yang dioptimalkan
+- File sumber PNG/JPG dan dokumen DWG/SKP tetap disimpan di root repository, di luar direktori publikasi.
 
 ## Optimasi gambar otomatis
-Workflow GitHub Actions pada `.github/workflows/optimize-images.yml` mengonversi logo dan foto profil sumber menjadi WebP saat file sumber atau workflow diperbarui, serta dapat dijalankan manual melalui tab Actions. Foto profil dibatasi hingga 900×1100 piksel dan logo hingga 1200×1200 piksel untuk menekan ukuran unduhan tanpa mengubah file sumber.
+Workflow GitHub Actions pada `.github/workflows/optimize-images.yml` mengonversi logo dan foto profil sumber menjadi WebP di `site/assets/`. Workflow dapat dijalankan manual melalui tab Actions atau saat file sumber berubah. File asli tetap dipertahankan di root.
 
 ## Pengembangan dan deployment
-Website tidak memerlukan proses build. Perubahan pada branch `main` akan dipublikasikan oleh Netlify apabila integrasi continuous deployment aktif. Periksa status deploy di dashboard Netlify setelah setiap pembaruan.
+Website tidak memerlukan proses build. Netlify membaca `netlify.toml` dan hanya menerbitkan direktori `site/`. Dengan demikian, file sumber besar di root repository tidak ikut dikirim ke publikasi website. Perubahan pada branch produksi Netlify akan memicu deployment otomatis jika integrasi Git aktif.
 
 ## Checklist sebelum publikasi
-- Periksa seluruh tautan CV, LinkedIn, email, WhatsApp, dan Google Drive.
-- Pastikan foto, logo, dan dokumen pendukung dapat diakses publik sesuai kebutuhan.
+- Periksa tautan CV, LinkedIn, email, WhatsApp, dan Google Drive.
 - Uji navigasi, formulir WhatsApp, dan tampilan pada ponsel/tablet/desktop.
-- Daftarkan sitemap di Google Search Console dan lakukan inspeksi URL.
-- Jalankan Lighthouse/PageSpeed Insights setelah situs live.
-- Ganti ilustrasi proyek dengan foto/dokumen proyek asli yang telah mendapat izin publikasi bila tersedia.
+- Pastikan logo dan foto profil WebP tersedia di `site/assets/`.
+- Periksa sitemap dan robots.txt setelah publikasi.
+- Jalankan Lighthouse/PageSpeed Insights setelah website live.
 
 ## Catatan akurasi
 Ringkasan proyek dan pengalaman harus tetap sesuai dokumen pendukung. Jangan menambahkan angka pencapaian, lingkup tanggung jawab, atau bukti sertifikasi yang belum diverifikasi.

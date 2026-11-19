@@ -316,10 +316,20 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
     ].join('\n');
     const note = document.getElementById('formNote');
     const whatsappUrl = 'https://wa.me/6285282822487?text=' + encodeURIComponent(message);
-    const opened = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    note.textContent = opened
-      ? (currentLanguage==='en'?'WhatsApp opened in a new tab. Review your message before sending.':'WhatsApp dibuka di tab baru. Periksa pesan Anda sebelum mengirimkannya.')
-      : (currentLanguage==='en'?'The pop-up was blocked. Allow pop-ups for this site, then submit the form again.':'Pop-up diblokir oleh browser. Izinkan pop-up untuk situs ini, lalu tekan tombol kirim kembali.');
+    // Open a blank tab synchronously while the submit is still a user gesture.
+    // Detach its opener before navigating to the external WhatsApp URL.
+    const whatsappWindow = window.open('about:blank', '_blank');
+    if (whatsappWindow) {
+      whatsappWindow.opener = null;
+      whatsappWindow.location.href = whatsappUrl;
+      note.textContent = currentLanguage==='en'
+        ? 'WhatsApp opened in a new tab. Review your message before sending.'
+        : 'WhatsApp dibuka di tab baru. Periksa pesan Anda sebelum mengirimkannya.';
+    } else {
+      note.textContent = currentLanguage==='en'
+        ? 'The pop-up was blocked. Allow pop-ups for this site, then submit the form again.'
+        : 'Pop-up diblokir oleh browser. Izinkan pop-up untuk situs ini, lalu tekan tombol kirim kembali.';
+    }
   });
 
   // Animasi masuk ringan saat elemen muncul di layar.
