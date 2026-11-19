@@ -44,6 +44,17 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
   .hero-monogram{width:68px;max-height:88px}
   .hero-identity h1{min-width:0;font-size:clamp(1.95rem,9vw,2.5rem)}
 }
+
+/* Use the visible mobile viewport for overlays when dynamic viewport units are supported. */
+@supports (height: 100dvh) {
+  .project-dialog-card { max-height: min(82dvh, 760px); }
+  .gallery-modal-card { height: min(88dvh, 760px); }
+}
+@media (max-width: 560px) {
+  @supports (height: 100dvh) {
+    .gallery-modal-card { height: 92dvh; }
+  }
+}
 </style>
 
 </head><body class="no-js">
