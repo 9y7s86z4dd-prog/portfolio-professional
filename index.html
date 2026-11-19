@@ -395,10 +395,11 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
   const projectDialog=document.getElementById('projectDialog');
   const projectDialogCard=projectDialog?.querySelector('.project-dialog-card');
   let lastProjectTrigger=null;
+  let projectPreviousOverflow='';
   function closeProjectDialog(){
     if(!projectDialog||projectDialog.hidden)return;
     projectDialog.hidden=true;
-    document.body.style.overflow='';
+    document.body.style.overflow=projectPreviousOverflow;
     if(lastProjectTrigger)lastProjectTrigger.focus();
   }
   document.querySelectorAll('[data-project-detail]').forEach(button=>button.addEventListener('click',()=>{
@@ -419,6 +420,7 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
     const actions=document.getElementById('projectDialogActions');actions.replaceChildren();
     detail.links.forEach(link=>{const a=document.createElement('a');a.className='btn primary';a.href=link.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=link.label+' ↗';actions.append(a);});
     if(currentLanguage==='en')applyLanguage('en');
+    projectPreviousOverflow=document.body.style.overflow;
     projectDialog.hidden=false;
     document.body.style.overflow='hidden';
     projectDialogCard?.focus();
@@ -429,11 +431,11 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
     if(!projectDialog||projectDialog.hidden)return;
     if(event.key==='Escape')closeProjectDialog();
     if(event.key==='Tab'&&projectDialogCard){
-      const focusable=[...projectDialogCard.querySelectorAll('a[href],button:not([disabled])')];
-      if(!focusable.length)return;
+      const focusable=[...projectDialogCard.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getAttribute('aria-hidden')!=='true');
+      if(!focusable.length){event.preventDefault();projectDialogCard.focus();return;}
       const first=focusable[0],last=focusable[focusable.length-1];
-      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
-      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+      if(event.shiftKey&&(document.activeElement===first||!projectDialogCard.contains(document.activeElement))){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&(document.activeElement===last||!projectDialogCard.contains(document.activeElement))){event.preventDefault();first.focus();}
     }
   });
 
@@ -442,15 +444,36 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
   window.addEventListener('popstate',syncPageFromUrl);
   window.addEventListener('hashchange',syncPageFromUrl);
 })();
-</script><div class="gallery-modal" id="galleryModal" hidden role="dialog" aria-modal="true" aria-labelledby="galleryModalTitle"><div class="gallery-modal-card"><button class="gallery-modal-close" type="button" aria-label="Tutup pratinjau">×</button><div class="gallery-modal-head"><h3 id="galleryModalTitle">Pratinjau dokumen</h3></div><iframe class="gallery-frame" id="galleryFrame" title="Pratinjau dokumen" loading="lazy" referrerpolicy="no-referrer"></iframe><div class="gallery-modal-foot"><p>Jika pratinjau tidak tampil, buka berkas langsung melalui Google Drive/CAD Viewer.</p><a id="galleryOpenExternal" href="#" target="_blank" rel="noopener noreferrer">Buka di tab baru ↗</a></div></div></div>
+</script><div class="gallery-modal" id="galleryModal" hidden role="dialog" aria-modal="true" aria-labelledby="galleryModalTitle" tabindex="-1"><div class="gallery-modal-card"><button class="gallery-modal-close" type="button" aria-label="Tutup pratinjau">×</button><div class="gallery-modal-head"><h3 id="galleryModalTitle">Pratinjau dokumen</h3></div><iframe class="gallery-frame" id="galleryFrame" title="Pratinjau dokumen" loading="lazy" referrerpolicy="no-referrer"></iframe><div class="gallery-modal-foot"><p>Jika pratinjau tidak tampil, buka berkas langsung melalui Google Drive/CAD Viewer.</p><a id="galleryOpenExternal" href="#" target="_blank" rel="noopener noreferrer">Buka di tab baru ↗</a></div></div></div>
 <script>
 (()=>{
  const modal=document.getElementById('galleryModal'),frame=document.getElementById('galleryFrame'),title=document.getElementById('galleryModalTitle'),external=document.getElementById('galleryOpenExternal');
- if(!modal||!frame)return;let trigger=null;
- function close(){modal.hidden=true;frame.src='about:blank';document.body.style.overflow='';if(trigger)trigger.focus();}
- document.querySelectorAll('[data-gallery-preview]').forEach(button=>button.addEventListener('click',()=>{trigger=button;title.textContent=button.dataset.galleryTitle||'Pratinjau dokumen';frame.src=button.dataset.galleryPreview;external.href=button.dataset.galleryPreview;modal.hidden=false;document.body.style.overflow='hidden';modal.querySelector('.gallery-modal-close').focus();}));
- modal.querySelector('.gallery-modal-close').addEventListener('click',close);
+ if(!modal||!frame||!external)return;
+ const closeButton=modal.querySelector('.gallery-modal-close');
+ let trigger=null,previousOverflow='';
+ function close(){
+  if(modal.hidden)return;
+  modal.hidden=true;frame.src='about:blank';document.body.style.overflow=previousOverflow;
+  if(trigger&&trigger.isConnected)trigger.focus();
+ }
+ document.querySelectorAll('[data-gallery-preview]').forEach(button=>button.addEventListener('click',()=>{
+  trigger=button;previousOverflow=document.body.style.overflow;
+  title.textContent=button.dataset.galleryTitle||'Pratinjau dokumen';
+  frame.src=button.dataset.galleryPreview;external.href=button.dataset.galleryPreview;
+  modal.hidden=false;document.body.style.overflow='hidden';closeButton.focus();
+ }));
+ closeButton.addEventListener('click',close);
  modal.addEventListener('click',event=>{if(event.target===modal)close();});
- document.addEventListener('keydown',event=>{if(modal.hidden)return;if(event.key==='Escape')close();if(event.key==='Tab'){const closeButton=modal.querySelector('.gallery-modal-close');if(event.shiftKey&&document.activeElement===closeButton){event.preventDefault();external.focus();}else if(!event.shiftKey&&document.activeElement===external){event.preventDefault();closeButton.focus();}}});
+ document.addEventListener('keydown',event=>{
+  if(modal.hidden)return;
+  if(event.key==='Escape'){event.preventDefault();close();return;}
+  if(event.key!=='Tab')return;
+  const active=document.activeElement;
+  if(event.shiftKey&&active===closeButton){event.preventDefault();external.focus();}
+  else if(!event.shiftKey&&active===external){event.preventDefault();closeButton.focus();}
+  else if(!event.shiftKey&&active===closeButton){event.preventDefault();frame.focus();}
+  else if(event.shiftKey&&active===frame){event.preventDefault();closeButton.focus();}
+  else if(!modal.contains(active)){event.preventDefault();closeButton.focus();}
+ });
 })();
 </script></body></html>
