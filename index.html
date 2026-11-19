@@ -438,7 +438,7 @@ html.js main>section{display:none!important}html.js main>section.is-active{displ
   });
 
   // Navigasi halaman tetap dapat digunakan dengan tombol browser Back/Forward.
-  function syncPageFromUrl(){const page=location.hash.slice(1);showPage(groups[page]?page:'home',false);if(primaryNav)primaryNav.classList.remove('is-open');if(navToggle){navToggle.setAttribute('aria-expanded','false');navToggle.textContent='☰';}}
+  function syncPageFromUrl(){const page=location.hash.slice(1);showPage(groups[page]?page:'home',false);closeMobileNav();}
   window.addEventListener('popstate',syncPageFromUrl);
   window.addEventListener('hashchange',syncPageFromUrl);
 })();
